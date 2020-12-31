@@ -1,28 +1,34 @@
+import Model.ChildCompaniesItem;
 import Model.Response;
 import jsonUtill.JsonUtill;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
-
-
 public class simpleTest {
     @Test
     public void  test1(){
-        Response response= new JsonUtill().toJava();
+        Response response = JsonUtill.toJava();
         System.out.println();
-        Assert.assertTrue(doesObjectContainField(response.getManufacturers().getChildCompanies(),"google"));
-        Assert.assertFalse(doesObjectContainField(response.getManufacturers().getChildCompanies(),"apple"));
+
+        ChildCompaniesItem testObject1 = new ChildCompaniesItem();
+        ChildCompaniesItem testObject2 = new ChildCompaniesItem();
+
+        testObject1.setName("Amazon");
+        testObject1.setAddress("Amazon Address");
+        testObject1.setPhone("123456");
+        testObject1.setState("LA");
+
+        testObject2.setName("Apple");
+        testObject2.setAddress("Apple Address");
+        testObject2.setPhone("3333333");
+        testObject2.setState("LA");
 
 
+        Assert.assertTrue(response.getManufacturers().getChildCompanies().contains(testObject1));
+        Assert.assertFalse(response.getManufacturers().getChildCompanies().contains(testObject2));
+
     }
-    public boolean doesObjectContainField(Object object, String fieldName) {
-        Class<?> objectClass = object.getClass();
-        for (Field field : objectClass.getDeclaredFields()) {
-            if (field.getName().equals(fieldName)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
+
+
 }
